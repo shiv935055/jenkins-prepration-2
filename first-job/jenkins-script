@@ -1,11 +1,20 @@
 pipeline {
-    agent {
-        docker{image 'node:16-alpine'}
-    }
+    agent none
     stages {
-        stage(test) {
+        stage('test') {
+            agent {
+                docker {imae 'maven:3.8.1-adoptopenjdk-11'}
+            }
             steps {
-                sh 'node --version'
+                sh 'mvn --version'
+            }
+        }
+        stage('front-end') {
+            agent {
+                docker {image 'node:16-alpine'}
+            steps {
+               sh 'node --version'
+            }
             }
         }
     }
